@@ -1,5 +1,4 @@
 #include "AbstractVector.h"
-#include <string>
 
 class IntVector : public Vector<int> {
 public:
