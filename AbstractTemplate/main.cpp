@@ -3,6 +3,9 @@
 #include "NumericVector.h"
 #include "StringVector.h"
 
+// 函数声明，用于在测试部分之间添加暂停
+void pause();
+
 int main() {
     std::cout << "=== 综合测试程序 ===\n" << std::endl;
 
@@ -38,6 +41,8 @@ int main() {
         std::cerr << "异常捕获: " << e.what() << "\n" << std::endl;
     }
 
+    pause(); // 暂停，等待用户确认
+
     try {
         // 测试 pop()
         std::cout << "调用 pop() 移除并返回最后一个元素" << std::endl;
@@ -54,6 +59,8 @@ int main() {
     catch (const std::exception& e) {
         std::cerr << "异常捕获: " << e.what() << "\n" << std::endl;
     }
+
+    pause(); // 暂停，等待用户确认
 
     // 2. 测试 DoubleVector
     std::cout << "=== 测试 DoubleVector ===" << std::endl;
@@ -87,6 +94,8 @@ int main() {
         std::cerr << "异常捕获: " << e.what() << "\n" << std::endl;
     }
 
+    pause(); // 暂停，等待用户确认
+
     try {
         // 测试 pop()
         std::cout << "调用 pop() 移除并返回最后一个元素" << std::endl;
@@ -103,6 +112,8 @@ int main() {
     catch (const std::exception& e) {
         std::cerr << "异常捕获: " << e.what() << "\n" << std::endl;
     }
+
+    pause(); // 暂停，等待用户确认
 
     // 3. 测试 StringVector
     std::cout << "=== 测试 StringVector ===" << std::endl;
@@ -142,6 +153,8 @@ int main() {
         std::cerr << "异常捕获: " << e.what() << "\n" << std::endl;
     }
 
+    pause(); // 暂停，等待用户确认
+
     try {
         // 测试 pop()
         std::cout << "调用 pop() 移除并返回最后一个元素" << std::endl;
@@ -160,6 +173,8 @@ int main() {
     catch (const std::exception& e) {
         std::cerr << "异常捕获: " << e.what() << "\n" << std::endl;
     }
+
+    pause(); // 暂停，等待用户确认
 
     // 4. 测试运算符重载：operator+ 和 operator+=
     std::cout << "=== 测试运算符重载 ===" << std::endl;
@@ -184,10 +199,14 @@ int main() {
     IntVector ivec3 = ivec1 + ivec2; // 测试 operator+
     std::cout << "ivec1 + ivec2: " << ivec3 << std::endl; // 输出: [ 1 2 3 4 ]
 
+    pause(); // 暂停，等待用户确认
+
     // 测试 IntVector 的 operator+=
     std::cout << "调用 operator+= 将 ivec2 追加到 ivec1 中" << std::endl;
     ivec1 += ivec2; // 测试 operator+=
     std::cout << "ivec1 += ivec2: " << ivec1 << std::endl; // 输出: [ 1 2 3 4 ]
+
+    pause(); // 暂停，等待用户确认
 
     // 测试 DoubleVector 的 operator+
     std::cout << "调用 operator+ 将 dvec1 和 dvec2 相加" << std::endl;
@@ -209,10 +228,14 @@ int main() {
     DoubleVector dvec3 = dvec1 + dvec2;
     std::cout << "dvec1 + dvec2: " << dvec3 << std::endl; // 输出: [ 1.1 2.2 3.3 4.4 ]
 
+    pause(); // 暂停，等待用户确认
+
     // 测试 DoubleVector 的 operator+=
     std::cout << "调用 operator+= 将 dvec2 追加到 dvec1 中" << std::endl;
     dvec1 += dvec2;
     std::cout << "dvec1 += dvec2: " << dvec1 << std::endl; // 输出: [ 1.1 2.2 3.3 4.4 ]
+
+    pause(); // 暂停，等待用户确认
 
     // 测试 StringVector 的 operator+
     std::cout << "调用 operator+ 将 svec1 和 svec2 相加" << std::endl;
@@ -236,10 +259,14 @@ int main() {
     StringVector svec3 = svec1 + svec2;
     std::cout << "svec1 + svec2: " << svec3 << std::endl; // 输出: [ "Good" " " "Morning" "!" " Have a great day." ]
 
+    pause(); // 暂停，等待用户确认
+
     // 测试 StringVector 的 operator+=
     std::cout << "调用 operator+= 将 svec2 追加到 svec1 中" << std::endl;
     svec1 += svec2;
     std::cout << "svec1 += svec2: " << svec1 << std::endl; // 输出: [ "Good" " " "Morning" "!" " Have a great day." ]
+
+    pause(); // 暂停，等待用户确认
 
     std::cout << "\n" << std::endl;
 
@@ -254,29 +281,41 @@ int main() {
     std::cout << "ivec1 大小: " << ivec1.size() << std::endl; // 输出: 4
     std::cout << "当前 ivec1: " << ivec1 << std::endl; // 输出: [ 1 2 3 4 ]
 
+    pause(); // 暂停，等待用户确认
+
     // 测试 shrink_to_fit()
     std::cout << "\n调用 shrink_to_fit() 缩减 ivec1 的容量至适合大小" << std::endl;
     ivec1.shrink_to_fit();
     std::cout << "ivec1 容量缩减至适合大小: " << ivec1.get_capacity() << std::endl; // 输出: 4
     std::cout << "当前 ivec1: " << ivec1 << std::endl; // 输出: [ 1 2 3 4 ]
 
+    pause(); // 暂停，等待用户确认
+
     // 测试 insert()
     std::cout << "\n调用 insert(2, 99) 在索引 2 插入 99" << std::endl;
     ivec1.insert(2, 99); // 在索引 2 插入 99
     std::cout << "ivec1 插入 99 在索引 2: " << ivec1 << std::endl; // 输出: [ 1 2 99 3 4 ]
 
+    pause(); // 暂停，等待用户确认
+
     std::cout << "调用 insert(1, 2, 55) 在索引 1 插入两个 55" << std::endl;
     ivec1.insert(1, 2, 55); // 在索引 1 插入两个 55
     std::cout << "ivec1 插入两个 55 在索引 1: " << ivec1 << std::endl; // 输出: [ 1 55 55 2 99 3 4 ]
+
+    pause(); // 暂停，等待用户确认
 
     // 测试 erase()
     std::cout << "\n调用 erase(3) 删除索引 3 的元素 (2)" << std::endl;
     ivec1.erase(3); // 删除索引 3 的元素 (2)
     std::cout << "ivec1 删除索引 3 的元素: " << ivec1 << std::endl; // 输出: [ 1 55 55 99 3 4 ]
 
+    pause(); // 暂停，等待用户确认
+
     std::cout << "调用 erase(1, 2) 删除索引 1 和 2 的元素 (55, 55)" << std::endl;
     ivec1.erase(1, 2); // 删除索引 1 和 2 的元素 (55, 55)
     std::cout << "ivec1 删除索引 1 和 2 的元素: " << ivec1 << std::endl; // 输出: [ 1 99 3 4 ]
+
+    pause(); // 暂停，等待用户确认
 
     // 测试 swap()
     std::cout << "\n调用 swap() 交换 ivec1 和 ivec_swap 的内容" << std::endl;
@@ -292,6 +331,8 @@ int main() {
     ivec1.swap(ivec_swap);
     std::cout << "交换后 ivec1: " << ivec1 << std::endl; // 输出: [ 100 200 ]
     std::cout << "交换后 ivec_swap: " << ivec_swap << std::endl; // 输出: [ 1 99 3 4 ]
+
+    pause(); // 暂停，等待用户确认
 
     std::cout << "\n" << std::endl;
 
@@ -311,11 +352,15 @@ int main() {
     ++ivec_inc;
     std::cout << "++ivec_inc: " << ivec_inc << std::endl; // 输出: [ 6 11 16 ]
 
+    pause(); // 暂停，等待用户确认
+
     // 后置递增
     std::cout << "调用后置递增运算符 ivec_before = ivec_inc++" << std::endl;
     IntVector ivec_before = ivec_inc++;
     std::cout << "ivec_before = ivec_inc++: " << ivec_before << std::endl; // 输出: [ 6 11 16 ]
     std::cout << "ivec_inc 之后: " << ivec_inc << std::endl;               // 输出: [ 7 12 17 ]
+
+    pause(); // 暂停，等待用户确认
 
     // 同样测试 DoubleVector
     DoubleVector dvec_inc;
@@ -332,11 +377,15 @@ int main() {
     ++dvec_inc;
     std::cout << "++dvec_inc: " << dvec_inc << std::endl; // 输出: [ 3.5 6.5 9.5 ]
 
+    pause(); // 暂停，等待用户确认
+
     // 后置递增
     std::cout << "调用后置递增运算符 dvec_before = dvec_inc++" << std::endl;
     DoubleVector dvec_before = dvec_inc++;
     std::cout << "dvec_before = dvec_inc++: " << dvec_before << std::endl; // 输出: [ 3.5 6.5 9.5 ]
     std::cout << "dvec_inc 之后: " << dvec_inc << std::endl;               // 输出: [ 4.5 7.5 10.5 ]
+
+    pause(); // 暂停，等待用户确认
 
     std::cout << "\n" << std::endl;
 
@@ -358,6 +407,8 @@ int main() {
         baseIntPtr->push(300);
         std::cout << "IntVector via Vector<int>*: " << *baseIntPtr << std::endl; // 输出: [ 100 200 300 ]
 
+        pause(); // 暂停，等待用户确认
+
         // 操作 DoubleVector 通过基类指针
         std::cout << "调用 push() 向 baseDoublePtr 指向的 DoubleVector 添加元素 4.4" << std::endl;
         baseDoublePtr->push(4.4);
@@ -366,6 +417,8 @@ int main() {
         std::cout << "调用 push() 向 baseDoublePtr 指向的 DoubleVector 添加元素 6.6" << std::endl;
         baseDoublePtr->push(6.6);
         std::cout << "DoubleVector via Vector<double>*: " << *baseDoublePtr << std::endl; // 输出: [ 4.4 5.5 6.6 ]
+
+        pause(); // 暂停，等待用户确认
 
         // 操作 StringVector 通过基类指针
         std::cout << "调用 push() 向 baseStringPtr 指向的 StringVector 添加元素 \"Dynamic\"" << std::endl;
@@ -377,6 +430,8 @@ int main() {
         std::cout << "调用 push() 向 baseStringPtr 指向的 StringVector 添加元素 \"!\"" << std::endl;
         baseStringPtr->push("!");
         std::cout << "StringVector via Vector<std::string>*: " << *baseStringPtr << std::endl; // 输出: [ "Dynamic" " " "Polymorphism" "!" ]
+
+        pause(); // 暂停，等待用户确认
 
         // 测试递增运算符通过基类指针
         std::cout << "调用前置递增运算符 ++(*specificIntPtr)" << std::endl;
@@ -390,6 +445,8 @@ int main() {
             std::cerr << "转换失败: baseIntPtr 不是 IntVector 类型。" << std::endl;
         }
 
+        pause(); // 暂停，等待用户确认
+
         // 测试 concatenate() 通过基类指针
         std::cout << "调用 concatenate() 通过 baseStringPtr 指向的 StringVector" << std::endl;
         StringVector* specificStringPtr = dynamic_cast<StringVector*>(baseStringPtr);
@@ -400,12 +457,16 @@ int main() {
             std::cerr << "转换失败: baseStringPtr 不是 StringVector 类型。" << std::endl;
         }
 
+        pause(); // 暂停，等待用户确认
+
         // 测试 reserve() 通过基类指针
         std::cout << "调用 reserve(10) 通过 baseDoublePtr 指向的 DoubleVector" << std::endl;
         baseDoublePtr->reserve(10);
         std::cout << "DoubleVector 预留容量至 10: " << baseDoublePtr->get_capacity() << std::endl; // 输出: 10
         std::cout << "调用 size() 通过 baseDoublePtr 指向的 DoubleVector" << std::endl;
         std::cout << "DoubleVector 大小: " << baseDoublePtr->size() << std::endl; // 输出: 3
+
+        pause(); // 暂停，等待用户确认
 
         // 测试 insert() 通过基类指针
         std::cout << "调用 insert(1, 150) 通过 baseIntPtr 指向的 IntVector" << std::endl;
@@ -416,6 +477,8 @@ int main() {
         else {
             std::cerr << "转换失败: baseIntPtr 不是 IntVector 类型。" << std::endl;
         }
+
+        pause(); // 暂停，等待用户确认
 
         // 测试 erase() 通过基类指针
         std::cout << "调用 erase(2) 通过 baseIntPtr 指向的 IntVector" << std::endl;
@@ -439,4 +502,12 @@ int main() {
 
     std::cout << "\n=== 测试结束 ===" << std::endl;
     return 0;
+}
+
+// 定义 pause 函数，等待用户按下回车键继续
+void pause() {
+    std::cout << "按任意键继续..." << std::endl;
+    //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::cin.get();
+    std::cout << "----------------------------------------\n" << std::endl;
 }
