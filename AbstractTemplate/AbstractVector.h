@@ -1,3 +1,4 @@
+// AbstractVector.h
 #ifndef ABSTRACT_VECTOR_H
 #define ABSTRACT_VECTOR_H
 
@@ -41,10 +42,6 @@ public:
     // 索引运算符重载
     T& operator[](std::size_t index);
     const T& operator[](std::size_t index) const;
-
-    // 加法运算符重载
-    Vector operator+(const Vector& other) const;
-    Vector& operator+=(const Vector& other);
 
     // 前置递增运算符重载
     Vector& operator++();
@@ -158,7 +155,39 @@ const T& Vector<T>::operator[](std::size_t index) const {
     return data_[index];
 }
 
-// 其他成员函数的实现
+template<typename T>
+Vector<T>& Vector<T>::operator++() {
+    for (std::size_t i = 0; i < size_; ++i) {
+        ++data_[i];
+    }
+    return *this;
+}
+
+template<typename T>
+Vector<T> Vector<T>::operator++(int) {
+    Vector temp = *this;
+    ++(*this);
+    return temp;
+}
+
+template<typename U>
+std::ostream& operator<<(std::ostream& os, const Vector<U>& vec) {
+    os << "[ ";
+    for (std::size_t i = 0; i < vec.size_; ++i) {
+        os << vec[i] << " ";
+    }
+    os << "]";
+    return os;
+}
+
+template<typename U>
+std::istream& operator>>(std::istream& is, Vector<U>& vec) {
+    U value;
+    while (is >> value) {
+        vec.push(value);
+    }
+    return is;
+}
 
 template<typename T>
 void Vector<T>::reserve(std::size_t new_capacity) {
@@ -191,27 +220,6 @@ template<typename T>
 void Vector<T>::resize(std::size_t new_capacity) {
     reserve(new_capacity);
 }
-
-template<typename U>
-std::ostream& operator<<(std::ostream& os, const Vector<U>& vec) {
-    os << "[ ";
-    for (std::size_t i = 0; i < vec.size(); ++i) {
-        os << vec[i] << " ";
-    }
-    os << "]";
-    return os;
-}
-
-template<typename U>
-std::istream& operator>>(std::istream& is, Vector<U>& vec) {
-    U value;
-    while (is >> value) {
-        vec.push(value);
-    }
-    return is;
-}
-
-// 插入和删除操作的实现
 
 template<typename T>
 void Vector<T>::insert(std::size_t index, const T& item) {

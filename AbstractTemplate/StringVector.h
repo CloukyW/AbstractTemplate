@@ -81,6 +81,26 @@ public:
         return result;
     }
 
+    // 实现 operator+ 和 operator+=
+    StringVector operator+(const StringVector& other) const {
+        StringVector result;
+        result.reserve(this->size_ + other.size_);
+        for (std::size_t i = 0; i < this->size_; ++i) {
+            result.push(this->data_[i]);
+        }
+        for (std::size_t i = 0; i < other.size_; ++i) {
+            result.push(other.data_[i]);
+        }
+        return result;
+    }
+
+    StringVector& operator+=(const StringVector& other) {
+        for (std::size_t i = 0; i < other.size_; ++i) {
+            push(other.data_[i]);
+        }
+        return *this;
+    }
+
     // 重写输出流运算符以包括特定功能
     friend std::ostream& operator<<(std::ostream& os, const StringVector& vec) {
         os << "[ ";

@@ -1,3 +1,4 @@
+// NumericVector.h
 #ifndef NUMERIC_VECTOR_H
 #define NUMERIC_VECTOR_H
 
@@ -70,6 +71,26 @@ public:
         }
         return data_[index];
     }
+
+    // 实现 operator+ 和 operator+=
+    IntVector operator+(const IntVector& other) const {
+        IntVector result;
+        result.reserve(this->size_ + other.size_);
+        for (std::size_t i = 0; i < this->size_; ++i) {
+            result.push(this->data_[i]);
+        }
+        for (std::size_t i = 0; i < other.size_; ++i) {
+            result.push(other.data_[i]);
+        }
+        return result;
+    }
+
+    IntVector& operator+=(const IntVector& other) {
+        for (std::size_t i = 0; i < other.size_; ++i) {
+            push(other.data_[i]);
+        }
+        return *this;
+    }
 };
 
 // DoubleVector 类
@@ -138,6 +159,26 @@ public:
             throw std::out_of_range("Index out of range");
         }
         return data_[index];
+    }
+
+    // 实现 operator+ 和 operator+=
+    DoubleVector operator+(const DoubleVector& other) const {
+        DoubleVector result;
+        result.reserve(this->size_ + other.size_);
+        for (std::size_t i = 0; i < this->size_; ++i) {
+            result.push(this->data_[i]);
+        }
+        for (std::size_t i = 0; i < other.size_; ++i) {
+            result.push(other.data_[i]);
+        }
+        return result;
+    }
+
+    DoubleVector& operator+=(const DoubleVector& other) {
+        for (std::size_t i = 0; i < other.size_; ++i) {
+            push(other.data_[i]);
+        }
+        return *this;
     }
 };
 
