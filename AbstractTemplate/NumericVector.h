@@ -1,105 +1,144 @@
+#ifndef NUMERIC_VECTOR_H
+#define NUMERIC_VECTOR_H
+
 #include "AbstractVector.h"
 
+// IntVector 类
 class IntVector : public Vector<int> {
 public:
-    IntVector() : Vector() {}
+    // 默认构造函数
+    IntVector() : Vector<int>() {}
 
     // 用数组构造IntVector
-    IntVector(const int* arr, size_t size) : Vector(arr, size) {}
+    IntVector(const int* arr, std::size_t size) : Vector<int>(arr, size) {}
 
-    // 判断是否为空
+    // 复制构造函数
+    IntVector(const IntVector& other) : Vector<int>(other) {}
+
+    // 移动构造函数
+    IntVector(IntVector&& other) noexcept : Vector<int>(std::move(other)) {}
+
+    // 赋值运算符重载
+    IntVector& operator=(const IntVector& other) {
+        Vector<int>::operator=(other);
+        return *this;
+    }
+
+    // 移动赋值运算符重载
+    IntVector& operator=(IntVector&& other) noexcept {
+        Vector<int>::operator=(std::move(other));
+        return *this;
+    }
+
+    // 实现纯虚函数
     bool empty() const override {
-        return element_count == 0;
+        return size_ == 0;
     }
 
-    // 返回元素个数
-    size_t size() const override {
-        return element_count;
+    std::size_t size() const override {
+        return size_;
     }
 
-    // 返回当前容量
-    size_t get_capacity() const override {
-        return capacity;
+    std::size_t get_capacity() const override {
+        return capacity_;
     }
 
-    // 向末尾添加元素
     void push(const int& item) override {
-        if (element_count >= capacity) {
-            reserve(capacity == 0 ? 1 : capacity * 2);
+        if (size_ >= capacity_) {
+            resize(capacity_ == 0 ? 1 : capacity_ * 2);
         }
-        data[element_count++] = item;
+        data_[size_++] = item;
     }
 
-    // 移除末尾元素
     int pop() override {
         if (empty()) {
-            throw std::out_of_range("Vector is empty");
+            throw std::out_of_range("IntVector is empty");
         }
-        return data[--element_count];
+        return data_[--size_];
     }
 
-    // 返回指定位置的元素
-    int& at(size_t index) override {
-        if (index >= element_count) {
+    int& at(std::size_t index) override {
+        if (index >= size_) {
             throw std::out_of_range("Index out of range");
         }
-        return data[index];
+        return data_[index];
     }
 
-    const int& at(size_t index) const override {
-        if (index >= element_count) {
+    const int& at(std::size_t index) const override {
+        if (index >= size_) {
             throw std::out_of_range("Index out of range");
         }
-        return data[index];
+        return data_[index];
     }
 };
 
+// DoubleVector 类
 class DoubleVector : public Vector<double> {
 public:
-    DoubleVector() : Vector() {}
+    // 默认构造函数
+    DoubleVector() : Vector<double>() {}
 
     // 用数组构造DoubleVector
-    DoubleVector(const double* arr, size_t size) : Vector(arr, size) {}
+    DoubleVector(const double* arr, std::size_t size) : Vector<double>(arr, size) {}
 
+    // 复制构造函数
+    DoubleVector(const DoubleVector& other) : Vector<double>(other) {}
+
+    // 移动构造函数
+    DoubleVector(DoubleVector&& other) noexcept : Vector<double>(std::move(other)) {}
+
+    // 赋值运算符重载
+    DoubleVector& operator=(const DoubleVector& other) {
+        Vector<double>::operator=(other);
+        return *this;
+    }
+
+    // 移动赋值运算符重载
+    DoubleVector& operator=(DoubleVector&& other) noexcept {
+        Vector<double>::operator=(std::move(other));
+        return *this;
+    }
+
+    // 实现纯虚函数
     bool empty() const override {
-        return element_count == 0;
+        return size_ == 0;
     }
 
-    size_t size() const override {
-        return element_count;
+    std::size_t size() const override {
+        return size_;
     }
 
-    size_t get_capacity() const override {
-        return capacity;
+    std::size_t get_capacity() const override {
+        return capacity_;
     }
 
     void push(const double& item) override {
-        if (element_count >= capacity) {
-            reserve(capacity == 0 ? 1 : capacity * 2);
+        if (size_ >= capacity_) {
+            resize(capacity_ == 0 ? 1 : capacity_ * 2);
         }
-        data[element_count++] = item;
+        data_[size_++] = item;
     }
 
     double pop() override {
         if (empty()) {
-            throw std::out_of_range("Vector is empty");
+            throw std::out_of_range("DoubleVector is empty");
         }
-        return data[--element_count];
+        return data_[--size_];
     }
 
-    double& at(size_t index) override {
-        if (index >= element_count) {
+    double& at(std::size_t index) override {
+        if (index >= size_) {
             throw std::out_of_range("Index out of range");
         }
-        return data[index];
+        return data_[index];
     }
 
-    const double& at(size_t index) const override {
-        if (index >= element_count) {
+    const double& at(std::size_t index) const override {
+        if (index >= size_) {
             throw std::out_of_range("Index out of range");
         }
-        return data[index];
+        return data_[index];
     }
 };
 
-#pragma once
+#endif // NUMERIC_VECTOR_H
