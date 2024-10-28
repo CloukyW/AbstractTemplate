@@ -101,6 +101,23 @@ public:
         return *this;
     }
 
+    // 实现前置递增运算符（递增每个字符的ASCII值）
+    StringVector& operator++() {
+        for (std::size_t i = 0; i < size_; ++i) {
+            for (auto& ch : data_[i]) {
+                ++ch;
+            }
+        }
+        return *this;
+    }
+
+    // 实现后置递增运算符
+    StringVector operator++(int) {
+        StringVector temp = *this;
+        ++(*this);
+        return temp;
+    }
+
     // 重写输出流运算符以包括特定功能
     friend std::ostream& operator<<(std::ostream& os, const StringVector& vec) {
         os << "[ ";

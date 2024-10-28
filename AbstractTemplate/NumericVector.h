@@ -91,9 +91,23 @@ public:
         }
         return *this;
     }
+
+    // 实现前置递增运算符
+    IntVector& operator++() {
+        for (std::size_t i = 0; i < size_; ++i) {
+            ++data_[i];
+        }
+        return *this;
+    }
+
+    // 实现后置递增运算符
+    IntVector operator++(int) {
+        IntVector temp = *this;
+        ++(*this);
+        return temp;
+    }
 };
 
-// DoubleVector 类
 class DoubleVector : public Vector<double> {
 public:
     // 默认构造函数
@@ -180,6 +194,22 @@ public:
         }
         return *this;
     }
+
+    // 实现前置递增运算符
+    DoubleVector& operator++() {
+        for (std::size_t i = 0; i < size_; ++i) {
+            ++data_[i];
+        }
+        return *this;
+    }
+
+    // 实现后置递增运算符
+    DoubleVector operator++(int) {
+        DoubleVector temp = *this;
+        ++(*this);
+        return temp;
+    }
 };
+
 
 #endif // NUMERIC_VECTOR_H

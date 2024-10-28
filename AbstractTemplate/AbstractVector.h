@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <memory>
 
+// 抽象基类模板
 template<typename T>
 class Vector {
 protected:
@@ -14,50 +15,32 @@ protected:
     std::size_t size_;
     std::size_t capacity_;
 
-    // 私有的辅助函数用于动态调整数组大小
+    // 辅助函数：调整容量
     void resize(std::size_t new_capacity);
 
 public:
-    // 默认构造函数
+    // 构造函数
     Vector();
-
-    // 用数组构造Vector
     Vector(const T* arr, std::size_t size);
-
-    // 复制构造函数
     Vector(const Vector& other);
-
-    // 移动构造函数
     Vector(Vector&& other) noexcept;
 
-    // 赋值运算符重载
+    // 赋值运算符
     Vector& operator=(const Vector& other);
-
-    // 移动赋值运算符重载
     Vector& operator=(Vector&& other) noexcept;
 
-    // 虚析构函数
-    virtual ~Vector() = default;
-
-    // 索引运算符重载
+    // 索引运算符
     T& operator[](std::size_t index);
     const T& operator[](std::size_t index) const;
 
-    // 前置递增运算符重载
-    Vector& operator++();
-
-    // 后置递增运算符重载
-    Vector operator++(int);
-
-    // 输出流运算符重载
+    // 输入输出运算符
     template<typename U>
     friend std::ostream& operator<<(std::ostream& os, const Vector<U>& vec);
 
-    // 输入流运算符重载
     template<typename U>
     friend std::istream& operator>>(std::istream& is, Vector<U>& vec);
 
-    // 纯虚函数（抽象接口）
+    // 纯虚函数
     virtual bool empty() const = 0;
     virtual std::size_t size() const = 0;
     virtual std::size_t get_capacity() const = 0;
@@ -66,24 +49,17 @@ public:
     virtual T& at(std::size_t index) = 0;
     virtual const T& at(std::size_t index) const = 0;
 
-    // 预留内存空间
+    // 其他成员函数
     void reserve(std::size_t new_capacity);
-
-    // 释放超过size的内存空间
     void shrink_to_fit();
-
-    // 插入和删除操作
     void insert(std::size_t index, const T& item);
     void insert(std::size_t index, std::size_t count, const T& item);
     void erase(std::size_t index);
     void erase(std::size_t index, std::size_t count);
-
-    // 交换两个vector的数据元素
     void swap(Vector& other) noexcept;
 };
 
-// 实现部分（通常应在同一头文件中实现模板类）
-
+// 实现部分（与之前相同）
 template<typename T>
 Vector<T>::Vector() : data_(nullptr), size_(0), capacity_(0) {}
 
@@ -153,21 +129,6 @@ const T& Vector<T>::operator[](std::size_t index) const {
         throw std::out_of_range("Index out of range");
     }
     return data_[index];
-}
-
-template<typename T>
-Vector<T>& Vector<T>::operator++() {
-    for (std::size_t i = 0; i < size_; ++i) {
-        ++data_[i];
-    }
-    return *this;
-}
-
-template<typename T>
-Vector<T> Vector<T>::operator++(int) {
-    Vector temp = *this;
-    ++(*this);
-    return temp;
 }
 
 template<typename U>
@@ -246,9 +207,8 @@ void Vector<T>::insert(std::size_t index, std::size_t count, const T& item) {
         resize(std::max(capacity_ * 2, size_ + count));
     }
     // 移动元素
-    for (std::size_t i = size_ + count - 1; i >= index + count && i < size_ + count; --i) {
-        data_[i] = data_[i - count];
-        if (i == index + count) break; // 防止 size_t 下溢
+    for (std::size_t i = size_ + count; i > index + count; --i) {
+        data_[i - 1] = data_[i - count - 1];
     }
     // 插入新元素
     for (std::size_t i = 0; i < count; ++i) {
