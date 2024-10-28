@@ -6,54 +6,41 @@
 #include "AbstractVector.h"
 #include <string>
 
-template <>
-class AbstractVector<std::string> {
-protected:
-    int size_;
-    int capacity_;
-    std::string* data_;
+class StringVector : public Vector<std::string> {
+public:
+    StringVector() : Vector() {}
 
-    void resize(int new_capacity) {
-        if (new_capacity < size_) {
-            throw std::invalid_argument("New capacity cannot be less than current size.");
-        }
-        std::string* new_data = new std::string[new_capacity];
-        for (int i = 0; i < size_; ++i) {
-            new_data[i] = data_[i];
-        }
+    // 用数组构造StringVector
+    StringVector(const std::string* arr, size_t size) : Vector(arr, size) {}
+
+    bool empty() const override {
+        return element_count == 0;
+    }
+
+    size_t size() const override {
+        return element_count;
+    }
         delete[] data_;
         data_ = new_data;
         capacity_ = new_capacity;
     }
 
-public:
-    AbstractVector(int capacity = 10) : size_(0), capacity_(capacity), data_(new std::string[capacity]) {}
-
-    virtual ~AbstractVector() {
-        delete[] data_;
+    size_t get_capacity() const override {
+        return capacity;
     }
 
-    int size() const { return size_; }
-
-    int capacity() const { return capacity_; }
-
-    virtual std::string get(int index) const {
-        if (index < 0 || index >= size_) {
-            throw std::out_of_range("Index out of range.");
+    void push(const std::string& item) override {
+        if (element_count >= capacity) {
+            reserve(capacity == 0 ? 1 : capacity * 2);
         }
-        return data_[index];
+        data[element_count++] = item;
     }
 
-    virtual void push_back(const std::string& value) = 0;
-
-    virtual void pop_back() = 0;
-
-    virtual void display() const {
-        std::cout << "[ ";
-        for (int i = 0; i < size_; ++i) {
-            std::cout << "\"" << data_[i] << "\" ";
+    std::string pop() override {
+        if (empty()) {
+            throw std::out_of_range("Vector is empty");
         }
-        std::cout << "]";
+        return data[--element_count];
     }
 };
 
@@ -61,18 +48,18 @@ class StringVector : public AbstractVector<std::string> {
 public:
     StringVector(int capacity = 10) : AbstractVector<std::string>(capacity) {}
 
-    void push_back(const std::string& value) override {
-        if (size_ >= capacity_) {
-            resize(capacity_ * 2);
+    std::string& at(size_t index) override {
+        if (index >= element_count) {
+            throw std::out_of_range("Index out of range");
         }
-        data_[size_++] = value;
+        return data[index];
     }
 
-    void pop_back() override {
-        if (size_ == 0) {
-            throw std::underflow_error("StringVector is empty. Cannot pop.");
+    const std::string& at(size_t index) const override {
+        if (index >= element_count) {
+            throw std::out_of_range("Index out of range");
         }
-        --size_;
+        return data[index];
     }
 
     void display() const override {
@@ -80,6 +67,6 @@ public:
         AbstractVector<std::string>::display();
         std::cout << std::endl;
     }
-};
+}; 
 
-#endif // STRINGVECTOR_H
+#pragma once
