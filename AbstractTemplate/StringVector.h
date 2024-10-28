@@ -1,4 +1,3 @@
-#pragma once
 // StringVector.h
 #ifndef STRINGVECTOR_H
 #define STRINGVECTOR_H
@@ -8,65 +7,98 @@
 
 class StringVector : public Vector<std::string> {
 public:
-    StringVector() : Vector() {}
+    // 默认构造函数
+    StringVector() : Vector<std::string>() {}
 
     // 用数组构造StringVector
-    StringVector(const std::string* arr, size_t size) : Vector(arr, size) {}
+    StringVector(const std::string* arr, std::size_t size) : Vector<std::string>(arr, size) {}
 
+    // 复制构造函数
+    StringVector(const StringVector& other) : Vector<std::string>(other) {}
+
+    // 移动构造函数
+    StringVector(StringVector&& other) noexcept : Vector<std::string>(std::move(other)) {}
+
+    // 赋值运算符重载
+    StringVector& operator=(const StringVector& other) {
+        Vector<std::string>::operator=(other);
+        return *this;
+    }
+
+    // 移动赋值运算符重载
+    StringVector& operator=(StringVector&& other) noexcept {
+        Vector<std::string>::operator=(std::move(other));
+        return *this;
+    }
+
+    // 实现纯虚函数
     bool empty() const override {
-        return element_count == 0;
+        return size_ == 0;
     }
 
-    size_t size() const override {
-        return element_count;
-    }
-        delete[] data_;
-        data_ = new_data;
-        capacity_ = new_capacity;
+    std::size_t size() const override {
+        return size_;
     }
 
-    size_t get_capacity() const override {
-        return capacity;
+    std::size_t get_capacity() const override {
+        return capacity_;
     }
 
     void push(const std::string& item) override {
-        if (element_count >= capacity) {
-            reserve(capacity == 0 ? 1 : capacity * 2);
+        if (size_ >= capacity_) {
+            resize(capacity_ == 0 ? 1 : capacity_ * 2);
         }
-        data[element_count++] = item;
+        data_[size_++] = item;
     }
 
     std::string pop() override {
         if (empty()) {
-            throw std::out_of_range("Vector is empty");
+            throw std::out_of_range("StringVector is empty");
         }
-        return data[--element_count];
+        return data_[--size_];
+    }
+
+    std::string& at(std::size_t index) override {
+        if (index >= size_) {
+            throw std::out_of_range("Index out of range");
+        }
+        return data_[index];
+    }
+
+    const std::string& at(std::size_t index) const override {
+        if (index >= size_) {
+            throw std::out_of_range("Index out of range");
+        }
+        return data_[index];
+    }
+
+    // 添加字符串特定的功能，例如拼接所有字符串
+    std::string concatenate() const {
+        std::string result;
+        for (std::size_t i = 0; i < size_; ++i) {
+            result += data_[i];
+        }
+        return result;
+    }
+
+    // 重写输出流运算符以包括特定功能
+    friend std::ostream& operator<<(std::ostream& os, const StringVector& vec) {
+        os << "[ ";
+        for (std::size_t i = 0; i < vec.size_; ++i) {
+            os << "\"" << vec.data_[i] << "\" ";
+        }
+        os << "]";
+        return os;
+    }
+
+    // 重写输入流运算符
+    friend std::istream& operator>>(std::istream& is, StringVector& vec) {
+        std::string value;
+        while (is >> value) {
+            vec.push(value);
+        }
+        return is;
     }
 };
 
-class StringVector : public AbstractVector<std::string> {
-public:
-    StringVector(int capacity = 10) : AbstractVector<std::string>(capacity) {}
-
-    std::string& at(size_t index) override {
-        if (index >= element_count) {
-            throw std::out_of_range("Index out of range");
-        }
-        return data[index];
-    }
-
-    const std::string& at(size_t index) const override {
-        if (index >= element_count) {
-            throw std::out_of_range("Index out of range");
-        }
-        return data[index];
-    }
-
-    void display() const override {
-        std::cout << "StringVector: ";
-        AbstractVector<std::string>::display();
-        std::cout << std::endl;
-    }
-}; 
-
-#pragma once
+#endif // STRINGVECTOR_H
