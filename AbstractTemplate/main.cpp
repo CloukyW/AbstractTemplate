@@ -13,12 +13,12 @@ int main() {
     std::cout << "=== 测试 IntVector ===" << std::endl;
     IntVector ivec;
     try {
-        std::cout << "调用 push() 添加元素 10" << std::endl;
-        ivec.push(10);
-        std::cout << "调用 push() 添加元素 20" << std::endl;
-        ivec.push(20);
-        std::cout << "调用 push() 添加元素 30" << std::endl;
-        ivec.push(30);
+        std::cout << "调用 push() 添加元素 11" << std::endl;
+        ivec.push(11);
+        std::cout << "调用 push() 添加元素 45" << std::endl;
+        ivec.push(45);
+        std::cout << "调用 push() 添加元素 14" << std::endl;
+        ivec.push(14);
         std::cout << "初始 IntVector: " << ivec << std::endl; // 输出: [ 10 20 30 ]
 
         // 测试 empty() 和 size()
@@ -119,12 +119,12 @@ int main() {
     std::cout << "=== 测试 StringVector ===" << std::endl;
     StringVector svec;
     try {
-        std::cout << "调用 push() 添加元素 \"Hello\"" << std::endl;
-        svec.push("Hello");
+        std::cout << "调用 push() 添加元素 \"Manba\"" << std::endl;
+        svec.push("Manba");
         std::cout << "调用 push() 添加元素 \" \"" << std::endl;
         svec.push(" ");
-        std::cout << "调用 push() 添加元素 \"World\"" << std::endl;
-        svec.push("World");
+        std::cout << "调用 push() 添加元素 \"Out\"" << std::endl;
+        svec.push("Out");
         std::cout << "调用 push() 添加元素 \"!\"" << std::endl;
         svec.push("!");
         std::cout << "初始 StringVector: " << svec << std::endl; // 输出: [ "Hello" " " "World" "!" ]
@@ -240,18 +240,18 @@ int main() {
     // 测试 StringVector 的 operator+
     std::cout << "调用 operator+ 将 svec1 和 svec2 相加" << std::endl;
     StringVector svec1;
-    std::cout << "调用 push() 向 svec1 添加元素 \"Good\"" << std::endl;
-    svec1.push("Good");
-    std::cout << "调用 push() 向 svec1 添加元素 \" \"" << std::endl;
-    svec1.push(" ");
-    std::cout << "调用 push() 向 svec1 添加元素 \"Morning\"" << std::endl;
-    svec1.push("Morning");
+    std::cout << "调用 push() 向 svec1 添加元素 \"What \"" << std::endl;
+    svec1.push("What ");
+    std::cout << "调用 push() 向 svec1 添加元素 \"can \"" << std::endl;
+    svec1.push("can ");
+    std::cout << "调用 push() 向 svec1 添加元素 \"I \"" << std::endl;
+    svec1.push("I ");
 
     StringVector svec2;
-    std::cout << "调用 push() 向 svec2 添加元素 \"!\"" << std::endl;
-    svec2.push("!");
-    std::cout << "调用 push() 向 svec2 添加元素 \" Have a great day.\"" << std::endl;
-    svec2.push(" Have a great day.");
+    std::cout << "调用 push() 向 svec2 添加元素 \"say \"" << std::endl;
+    svec2.push("say ");
+    std::cout << "调用 push() 向 svec2 添加元素 \"Manba out! \"" << std::endl;
+    svec2.push("Manba out! ");
 
     std::cout << "当前 svec1: " << svec1 << std::endl;
     std::cout << "当前 svec2: " << svec2 << std::endl;
@@ -421,14 +421,14 @@ int main() {
         pause(); // 暂停，等待用户确认
 
         // 操作 StringVector 通过基类指针
-        std::cout << "调用 push() 向 baseStringPtr 指向的 StringVector 添加元素 \"Dynamic\"" << std::endl;
-        baseStringPtr->push("Dynamic");
-        std::cout << "调用 push() 向 baseStringPtr 指向的 StringVector 添加元素 \" \"" << std::endl;
-        baseStringPtr->push(" ");
-        std::cout << "调用 push() 向 baseStringPtr 指向的 StringVector 添加元素 \"Polymorphism\"" << std::endl;
-        baseStringPtr->push("Polymorphism");
-        std::cout << "调用 push() 向 baseStringPtr 指向的 StringVector 添加元素 \"!\"" << std::endl;
-        baseStringPtr->push("!");
+        std::cout << "调用 push() 向 baseStringPtr 指向的 StringVector 添加元素 \"级\"" << std::endl;
+        baseStringPtr->push("级");
+        std::cout << "调用 push() 向 baseStringPtr 指向的 StringVector 添加元素 \"泥\"" << std::endl;
+        baseStringPtr->push("泥");
+        std::cout << "调用 push() 向 baseStringPtr 指向的 StringVector 添加元素 \"胎\"" << std::endl;
+        baseStringPtr->push("胎");
+        std::cout << "调用 push() 向 baseStringPtr 指向的 StringVector 添加元素 \"煤\"" << std::endl;
+        baseStringPtr->push("煤");
         std::cout << "StringVector via Vector<std::string>*: " << *baseStringPtr << std::endl; // 输出: [ "Dynamic" " " "Polymorphism" "!" ]
 
         pause(); // 暂停，等待用户确认
